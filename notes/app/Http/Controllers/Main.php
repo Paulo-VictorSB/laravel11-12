@@ -8,6 +8,6 @@ class Main extends Controller
 {
     public function index()
     {
-        echo "Hello, controller!";
+        return view('Main');
     }
 }
