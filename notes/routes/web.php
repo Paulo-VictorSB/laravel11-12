@@ -12,4 +12,4 @@ Route::get('/about', function () {
 });
 
 
-Route::get('/main', [Main::class, 'index']);
+Route::get('/main/{id}', [Main::class, 'index']);

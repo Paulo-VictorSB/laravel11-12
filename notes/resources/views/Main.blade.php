@@ -9,6 +9,8 @@
 <body>
 
     <h1>Welcome, view and Blade!</h1>
+    <hr>
+    <h3>The id is <?= $id ?></h3>
 
 </body>
 </html>

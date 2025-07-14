@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class Main extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        return view('Main');
+        return view('Main')->with('id', $id);
     }
 }
