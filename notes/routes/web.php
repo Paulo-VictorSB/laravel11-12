@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Main;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,3 +10,6 @@ Route::get('/', function () {
 Route::get('/about', function () {
     echo "About us";
 });
+
+
+Route::get('/main', [Main::class, 'index']);
