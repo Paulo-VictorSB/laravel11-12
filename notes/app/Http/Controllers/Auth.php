@@ -11,6 +11,11 @@ class Auth extends Controller
         return view('Login');
     }
 
+    public function loginSubmit(Request $request)
+    {
+        echo "Login submit";
+    }
+
     public function logout()
     {
         echo 'logout';
