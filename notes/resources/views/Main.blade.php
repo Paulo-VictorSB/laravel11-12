@@ -1,5 +1,0 @@
-@extends('layouts.MainLayout')
-@section('content')
-    <h1>Welcome, view and Blade!</h1>
-    <h3>The value is {{ $id }}</h3>
-@endsection
