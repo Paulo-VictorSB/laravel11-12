@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Auth extends Controller
 {
@@ -16,12 +17,12 @@ class Auth extends Controller
         // form validation
         $request->validate(
             [
-                'text_username' => 'required|mail',
+                'text_username' => 'required|email',
                 'text_password' => 'required|min:6|max:16'
             ],
             [
                 'text_username.required' => 'O username é obrigatório',
-                'text_username.mail' => 'O username deve ser um email válido',
+                'text_username.email' => 'O username deve ser um email válido',
 
                 'text_password.required' => 'O password é obrigatório',
                 'text_password.min' => 'O password deve ter no mínimo :min caracteres',
@@ -33,7 +34,13 @@ class Auth extends Controller
         $username = $request->input('text_username');
         $password = $request->input('text_password');
 
-        echo 'OK';
+        // test databse conn
+        try {
+            DB::connection()->getPdo();
+            echo "Conn is OK!";
+        } catch (\PDOException $e) {
+            echo "Conn failed: " . $e->getMessage();
+        }
     }
 
     public function logout()
