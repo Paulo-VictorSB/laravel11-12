@@ -3,11 +3,16 @@
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\Main;
 use App\Http\Middleware\CheckIsLogged;
+use App\Http\Middleware\CheckIsNotLogged;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/login', [Auth::class, 'login']);
-Route::post('/loginSubmit', [Auth::class, 'loginSubmit']);
+// auth users - user not logged
+Route::middleware([CheckIsNotLogged::class])->group(function () {
+    Route::get('/login', [Auth::class, 'login']);
+    Route::post('/loginSubmit', [Auth::class, 'loginSubmit']);
+});
 
+// app routes - user logged
 Route::middleware([CheckIsLogged::class])->group(function () {
     Route::get('/', [Main::class, 'index']);
     Route::get('/newNote', [Main::class, 'newNote']);
