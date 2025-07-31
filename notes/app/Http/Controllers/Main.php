@@ -13,7 +13,11 @@ class Main extends Controller
     {
         // load users notes
         $id = session('user.id');
-        $notes = User::find($id)->notes()->get()->toArray();
+        $notes = User::find($id)
+                    ->notes()
+                    ->whereNull('deleted_at')
+                    ->get()
+                    ->toArray();
 
         // show home view
         return view('Home', ['notes' => $notes]);
@@ -111,7 +115,28 @@ class Main extends Controller
     public function deleteNote($id)
     {
         $id = Operations::decryptId($id);
-        echo "im deleting note with id = $id";
+
+        // load note
+        $note = Note::find($id);
+
+        // show edit note view
+        return view('DeleteNote', ['note' => $note]);
     }
 
+    public function deleteNoteConfirm(Request $request)
+    {
+        // Check if note_id exists
+        if($request->note_id == null){
+            return redirect()->route('home');
+        }
+
+        // Decrypt Id
+        $id = Operations::decryptId($request->note_id);
+
+        $note = Note::find($id);
+        $note->deleted_at = date('Y-m-d H:i:s');
+        $note->save();
+
+        return redirect()->route('home');
+    }
 }
