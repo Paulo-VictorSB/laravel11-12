@@ -20,7 +20,10 @@ Route::middleware([CheckIsLogged::class])->group(function () {
 
     // edit note
     Route::get('/editNote/{id}', [Main::class, 'editNote'])->name('edit');
+    Route::post('/editNoteSubmit', [Main::class, 'editNoteSubmit'])->name('editNoteSubmit');
+
     // delete note
     Route::get('/deleteNote/{id}', [Main::class, 'deleteNote'])->name('delete');
+    Route::post('/deleteNoteSubmit', [Main::class, 'deleteNoteSubmit'])->name('deleteNoteSubmit');
     Route::get('/logout', [Auth::class, 'logout'])->name('logout');
 });
