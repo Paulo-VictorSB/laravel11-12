@@ -13,7 +13,7 @@ class Operations
         try {
             $value = Crypt::decrypt($value);
         } catch (DecryptException $e) {
-            return redirect('/');
+            return null;
         }
 
         return $value;
