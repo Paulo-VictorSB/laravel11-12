@@ -32,9 +32,17 @@ Route::redirect('/home', 'index');
 Route::view('/iindex', 'home');
 
 // ------------------------------------------------------ //
-// --------------------NOTE PARAMTERS-------------------- //
+// --------------------ROUTE PARAMTERS-------------------- //
 // ------------------------------------------------------ //
 
 Route::get('/valor/{value}', [Main::class, 'mostrarValor']);
 Route::get('/valor/{value1}/{value2}', [Main::class, 'mostrarValores']);
 Route::get('/valorOpcional/{value?}', [Main::class, 'mostrarValorOpcional']);
+
+// ------------------------------------------------------ //
+// -----------ROUTE PARAMTERS WITH CONSTRAINTS----------- //
+// ------------------------------------------------------ //
+
+Route::get('/exp1/{value}', function($value){
+    echo $value;
+})->where('value', '[0-9]+');
