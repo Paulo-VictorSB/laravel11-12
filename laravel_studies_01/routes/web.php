@@ -30,3 +30,11 @@ Route::get('/about', [Main::class, 'about']);
 Route::redirect('/home', 'index');
 
 Route::view('/iindex', 'home');
+
+// ------------------------------------------------------ //
+// --------------------NOTE PARAMTERS-------------------- //
+// ------------------------------------------------------ //
+
+Route::get('/valor/{value}', [Main::class, 'mostrarValor']);
+Route::get('/valor/{value1}/{value2}', [Main::class, 'mostrarValores']);
+Route::get('/valorOpcional/{value?}', [Main::class, 'mostrarValorOpcional']);
