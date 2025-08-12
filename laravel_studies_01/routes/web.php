@@ -95,5 +95,5 @@ Route::controller(User::class)->group(function () {
 });
 
 Route::fallback(function(){
-    return "Página não encontrada";
+    return "Página não encontrada ";
 });
