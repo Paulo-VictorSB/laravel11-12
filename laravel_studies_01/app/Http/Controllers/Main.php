@@ -3,36 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class Main extends Controller
 {
-    public function index()
+    public function initMethod(): string
     {
-        echo "index";
+        return "Hello World";
     }
 
-    public function about()
+    public function viewPage(): View
     {
-        echo "about";
-    }
-
-    public function mostrarValor($valor)
-    {
-        echo "Valor enviado pela rota: $valor";
-    }
-
-    public function mostrarValores(Request $request, $valor1, $valor2)
-    {
-        echo "Valores enviados pela rota: $valor1 e $valor2";
-    }
-
-    public function mostrarValorOpcional($valor = null)
-    {
-        if ($valor == null) {
-            echo "Nenhum valor enviado pela rota";
-            return;
-        }
-
-        echo "Valor enviado pela rota: $valor";
+        return view('home');
     }
 }
