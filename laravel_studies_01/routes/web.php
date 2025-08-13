@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Main;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->group(function(){
-    Route::get('/', [AdminController::class, 'index']);
-});
+Route::get('/teste/{value}', [Main::class, 'teste']);
