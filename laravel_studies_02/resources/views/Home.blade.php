@@ -1,15 +1,19 @@
 @extends('layouts.main_layout')
 @section('content')
-    {{-- isset --}}
-    @isset($value)
-        <p class="display-1 text-center">Váriavel setada</p>
-    @endisset
-    {{-- empty --}}
-    @empty($value)
-        <p class="display-1 text-center">O Valor está vazio</p>
-    @endempty
-    {{-- unless --}}
-    @unless($value == 100)
-        <p class="display-1 text-center">A menos que o valor não seja igual a 100 esse texto será apresentado</p>
-    @endunless
+    {{-- For --}}
+    @for ($i = 0; $i <= 5; $i++)
+        <h1>{{$i}}</h1>
+    @endfor
+
+    {{-- Foreach --}}
+    @foreach ($bairros as $bairro)
+        <h1>{{$bairro}}</h1>
+    @endforeach
+
+    {{-- ForElse --}}
+    @forelse ($nomes as $nome)
+        <h1>{{$nome}}</h1>
+    @empty
+        <h1>Nomes está vazio</h1>
+    @endforelse
 @endsection
