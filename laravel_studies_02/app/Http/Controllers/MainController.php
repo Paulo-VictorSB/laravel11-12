@@ -17,4 +17,16 @@ class MainController extends Controller
 
         return view('Home', $data);
     }
+
+    public function setSession(): View
+    {
+        session(['name' => 'John Doe']);
+        return view('home');
+    }
+
+    public function clearSession(): View
+    {
+        session()->forget('name');
+        return view('home');
+    }
 }
