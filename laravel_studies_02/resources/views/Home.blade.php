@@ -1,14 +1,15 @@
 @extends('layouts.main_layout')
 @section('content')
-    {{-- Switch case --}}
-    @switch($value)
-        @case(100)
-            <p class="display-1 text-center">O Valor é 100</p>
-            @break
-        @case(200)
-            <p class="display-1 text-center">O Valor é 200</p>
-            @break
-        @default
-            <p class="display-1 text-center">O Valor não é 100 e nem 200</p>
-    @endswitch
+    {{-- isset --}}
+    @isset($value)
+        <p class="display-1 text-center">Váriavel setada</p>
+    @endisset
+    {{-- empty --}}
+    @empty($value)
+        <p class="display-1 text-center">O Valor está vazio</p>
+    @endempty
+    {{-- unless --}}
+    @unless($value == 100)
+        <p class="display-1 text-center">A menos que o valor não seja igual a 100 esse texto será apresentado</p>
+    @endunless
 @endsection
