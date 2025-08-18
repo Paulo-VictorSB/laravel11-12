@@ -25,7 +25,7 @@
     </h3>
 
     <!-- form -->
-    <form action="{{ asset('generateExercises') }}" method="post">
+    <form action="{{ route('generateExercises') }}" method="post">
         @csrf
         <div class="container border border-primary rounded-3 p-5">
 
@@ -102,6 +102,17 @@
         </div>
 
     </form>
+
+    {{-- Validation erros --}}
+    @if($errors->any())
+        <div class="container animated">
+            <div class="row">
+                <div class="alert alert-danger mt-3 text-center">
+                    Selecione ao menos uma operação. As parcelas devem ser números entre 0 e 999. O número de operações deve ser entre 5 e 50.
+                </div>
+            </div>
+        </div>
+    @endif
 
     <!-- footer -->
     <footer class="text-center mt-5">
