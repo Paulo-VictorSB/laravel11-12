@@ -64,7 +64,7 @@ class MainController extends Controller
 
     public function printExercises()
     {
-        // check if exercises are in sessio
+        // check if exercises are in session
         if (!session('exercises')) { return redirect()->route('home'); }
 
         $exercises = session('exercises');
@@ -73,7 +73,7 @@ class MainController extends Controller
         echo "<hr>";
 
         foreach ($exercises as $exercise) {
-            echo "<h2><small>" . str_pad($exercise['exercises_number'], 2, "0", STR_PAD_LEFT) . " ➤ </small>" . $exercise['exercise'] ."</h2>";
+            echo "<h2><small>" . $exercise['exercises_number'] . " ➤ </small>" . $exercise['exercise'] ."</h2>";
         }
 
         // sollutions
@@ -81,13 +81,34 @@ class MainController extends Controller
         echo "<small>Soluções</small><br>";
 
         foreach ($exercises as $exercise) {
-            echo "<small>" . str_pad($exercise['exercises_number'], 2, "0", STR_PAD_LEFT) . " ➤ " . $exercise['sollution'] . "</small><br>";
+            echo "<small>" . $exercise['exercises_number'] . " ➤ " . $exercise['sollution'] . "</small><br>";
         }
     }
 
-    public function exportExercises(): void
+    public function exportExercises()
     {
-        echo "Exportar exercícios para um arquivo de texto";
+        // check if exercises are in session
+        if (!session('exercises')) { return redirect()->route('home'); }
+
+        $exercises = session('exercises');
+
+        // create file to download with exercises
+        $filename = "exercises_" . env('APP_NAME') . "_" . date('YmdHis') . '.txt';
+        $content = '';
+        foreach ($exercises as $exercise) {
+            $content .= $exercise['exercises_number'] . ' > ' . $exercise['exercise'] . "\n";
+        }
+
+        // sollutions
+        $content .= "\n";
+        $content .= "Soluções\n" . str_repeat('-', 20) . "\n";
+        foreach ($exercises as $exercise) {
+            $content .= $exercise['exercises_number'] . ' > ' . $exercise['sollution'] . "\n";
+        }
+
+        return response($content)
+                ->header('Content-Type', 'text/plain')
+                ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
     }
 
     private function generateExercise($i, $operations, $min, $max): array
@@ -131,7 +152,7 @@ class MainController extends Controller
 
         return [
             'operation' => $operation,
-            'exercises_number' => $i,
+            'exercises_number' => str_pad($i, 2, "0", STR_PAD_LEFT),
             'exercise' => $exercise,
             'sollution' => "$exercise $sollution"
         ];
