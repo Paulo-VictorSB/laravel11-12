@@ -30,10 +30,18 @@ class MainController extends Controller
         // operations
         $operations = [];
 
-        if ($request->check_sum) { $operations[] = 'sum'; }
-        if ($request->check_subtraction) { $operations[] = 'subtraction'; }
-        if ($request->check_multiplication) { $operations[] = 'multiplication'; }
-        if ($request->check_division) { $operations[] = 'division'; }
+        if ($request->check_sum) {
+            $operations[] = 'sum';
+        }
+        if ($request->check_subtraction) {
+            $operations[] = 'subtraction';
+        }
+        if ($request->check_multiplication) {
+            $operations[] = 'multiplication';
+        }
+        if ($request->check_division) {
+            $operations[] = 'division';
+        }
 
         // get numbers (min and max)
         $min = $request->number_one;
@@ -45,46 +53,11 @@ class MainController extends Controller
         // generate exercises
         $exercises  = [];
         for ($i = 1; $i <= $numberExercises; $i++) {
-            $operation = $operations[array_rand($operations)];
-            $number1 = rand($min, $max);
-            $number2 = rand($min, $max);
-
-            $exercise = '';
-            $sollution = '';
-
-            switch ($operation) {
-                case 'sum':
-                    $exercise = "$number1 + $number2 =";
-                    $sollution = $number1 + $number2;
-                    break;
-                case 'subtraction':
-                    $exercise = "$number1 - $number2 =";
-                    $sollution = $number1 - $number2;
-                    break;
-                case 'multiplication':
-                    $exercise = "$number1 X $number2 =";
-                    $sollution = $number1 * $number2;
-                    break;
-                case 'division':
-
-                    // avoid division by zero
-                    if ($number2 == 0) { $number2 = 1; }
-
-                    $exercise = "$number1 : $number2 =";
-                    $sollution = $number1 / $number2;
-                    break;
-            }
-
-            // if sollution is a float number, rounded it to 2 decimal places
-            if (is_float($sollution)) { $sollution = round($sollution, 2); }
-
-            $exercises[] = [
-                'operation' => $operation,
-                'exercises_number' => $i,
-                'exercise' => $exercise,
-                'sollution' => "$exercise $sollution"
-            ];
+            $exercises[] = $this->generateExercise($i, $operations, $min, $max);
         }
+
+        // place exercises in session
+        session(['exercises' => $exercises]);
 
         return view('operations', ['exercises' => $exercises]);
     }
@@ -97,5 +70,52 @@ class MainController extends Controller
     public function exportExercises(): void
     {
         echo "Exportar exercícios para um arquivo de texto";
+    }
+
+    private function generateExercise($i, $operations, $min, $max): array
+    {
+        $operation = $operations[array_rand($operations)];
+        $number1 = rand($min, $max);
+        $number2 = rand($min, $max);
+
+        $exercise = '';
+        $sollution = '';
+
+        switch ($operation) {
+            case 'sum':
+                $exercise = "$number1 + $number2 =";
+                $sollution = $number1 + $number2;
+                break;
+            case 'subtraction':
+                $exercise = "$number1 - $number2 =";
+                $sollution = $number1 - $number2;
+                break;
+            case 'multiplication':
+                $exercise = "$number1 X $number2 =";
+                $sollution = $number1 * $number2;
+                break;
+            case 'division':
+
+                // avoid division by zero
+                if ($number2 == 0) {
+                    $number2 = 1;
+                }
+
+                $exercise = "$number1 : $number2 =";
+                $sollution = $number1 / $number2;
+                break;
+        }
+
+        // if sollution is a float number, rounded it to 2 decimal places
+        if (is_float($sollution)) {
+            $sollution = round($sollution, 2);
+        }
+
+        return [
+            'operation' => $operation,
+            'exercises_number' => $i,
+            'exercise' => $exercise,
+            'sollution' => "$exercise $sollution"
+        ];
     }
 }
