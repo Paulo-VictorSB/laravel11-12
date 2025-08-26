@@ -6,8 +6,8 @@
     <h3>Este texto faz parte da view</h3>
 
     {{-- render component --}}
-    <x-my-component />
+    <x-my-component message="valor passado para dentro do component"/>
 
     {{-- render component em subpasta --}}
-    <x-admin.admin-card />
+    <x-admin.admin-card :name="$myName"/>
 @endsection
