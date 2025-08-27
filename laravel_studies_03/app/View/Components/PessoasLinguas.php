@@ -26,4 +26,16 @@ class PessoasLinguas extends Component
     {
         return view('components.pessoas-linguas');
     }
+
+    public function shouldRender(): bool
+    {
+        //  só renderiza o componente se uma pessoa fala mais do que uma língua
+        return count($this->linguas) > 1;
+    }
+
+    public function colorName(): bool
+    {
+        // se a pessoa for o joão, destaca o nome
+        return $this->pessoa == 'João';
+    }
 }

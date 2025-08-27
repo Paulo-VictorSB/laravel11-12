@@ -11,15 +11,14 @@ class MainController extends Controller
     {
         // as línguas que cada pessoa fala
         $data = [
-            'João' => [
+            'Carlos' => [
                 'Portugês',
                 'Inglês'
             ],
-            'Maria' => [
-                'Portugês',
-                'Espanhol'
+            'Mário' => [
+                'Portugês'
             ],
-            'Ana' => [
+            'João' => [
                 'Portugês',
                 'Inglês',
                 'Francês'
