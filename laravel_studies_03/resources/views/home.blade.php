@@ -5,7 +5,7 @@
 @section('content')
 
     @foreach ($pessoas_linguas as $pessoa => $linguas)
-        <x-pessoas-linguas :pessoas="$pessoa" :linguas="$linguas"/>
+        <x-pessoas-linguas :$pessoa :$linguas />
     @endforeach
 
 @endsection

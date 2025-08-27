@@ -12,7 +12,7 @@ class PessoasLinguas extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $pessoas,
+        public string $pessoa,
         public array $linguas
     )
     {

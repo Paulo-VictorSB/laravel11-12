@@ -1,5 +1,5 @@
 <div class="card my-2 border text-white px-3">
-    <h1>{{ $pessoas }}</h1>
+    <h1>{{ $pessoa }}</h1>
     <hr>
     <ul>
         @foreach ($linguas as $lingua)
