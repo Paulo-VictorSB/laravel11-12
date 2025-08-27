@@ -18,10 +18,16 @@
     </div> --}}
 
     {{-- Multi slots --}}
-    <x-multi-slot>
+    {{-- <x-multi-slot>
         <x-slot:title>Título</x-slot:title>
         <x-slot:content>Conteúdo</x-slot:content>
         <x-slot:footer>Footer</x-slot:footer>
-    </x-multi-slot>
+    </x-multi-slot> --}}
+
+    {{-- Componentes anonimos --}}
+    <h4>Componente Anonimo</h4>
+    <x-alert-card>Primeira mensagem</x-alert-card>
+    <x-alert-card>Segunda mensagem</x-alert-card>
+    <x-alert-card>Terceirza mensagem</x-alert-card>
 
 @endsection
