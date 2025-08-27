@@ -6,12 +6,15 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class MyComponent extends Component
+class PessoasLinguas extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $message)
+    public function __construct(
+        public string $pessoas,
+        public array $linguas
+    )
     {
         //
     }
@@ -21,6 +24,6 @@ class MyComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.my-component');
+        return view('components.pessoas-linguas');
     }
 }

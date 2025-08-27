@@ -3,11 +3,9 @@
 @section('page_title', 'Home page')
 
 @section('content')
-    <h3>Este texto faz parte da view</h3>
 
-    {{-- render component --}}
-    <x-my-component message="valor passado para dentro do component"/>
+    @foreach ($pessoas_linguas as $pessoa => $linguas)
+        <x-pessoas-linguas :pessoas="$pessoa" :linguas="$linguas"/>
+    @endforeach
 
-    {{-- render component em subpasta --}}
-    <x-admin.admin-card :name="$myName"/>
 @endsection
