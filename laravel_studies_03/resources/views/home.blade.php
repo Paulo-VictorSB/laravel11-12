@@ -8,12 +8,20 @@
         <x-pessoas-linguas :$pessoa :$linguas />
     @endforeach --}}
 
-{{-- componentes slots --}}
-<div>
-    <h4 class="text-info">Como funciona um Slot?</h4>
-    <x-other-card>
-        <h1 class="text-danger">Esse é o Slot!</h1>
-    </x-order-card>
-</div>
+    {{-- componentes slots --}}
+
+    {{-- <div>
+        <h4 class="text-info">Como funciona um Slot?</h4>
+        <x-other-card>
+            <h1 class="text-danger">Esse é o Slot!</h1>
+        </x-order-card>
+    </div> --}}
+
+    {{-- Multi slots --}}
+    <x-multi-slot>
+        <x-slot:title>Título</x-slot:title>
+        <x-slot:content>Conteúdo</x-slot:content>
+        <x-slot:footer>Footer</x-slot:footer>
+    </x-multi-slot>
 
 @endsection
