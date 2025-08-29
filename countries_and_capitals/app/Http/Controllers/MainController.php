@@ -44,7 +44,7 @@ class MainController extends Controller
             'quiz' => $quiz,
             'total_questions' => $total_questions,
             'current_question' => 1,
-            'correct_answrers' => 0,
+            'correct_answers' => 0,
             'wrong_answers' => 0
         ]);
 
@@ -94,15 +94,15 @@ class MainController extends Controller
         $current_question = session('current_question') - 1;
 
         // prepare answers to show in view
-        $answers = $quiz[$current_question['wrong_answers']];
-        $answers[] = $quiz[$current_question['correct_answers']];
+        $answers = $quiz[$current_question]['wrong_answers'];
+        $answers[] = $quiz[$current_question]['correct_answer'];
 
         shuffle($answers);
 
         return view('game', [
             'country' => $quiz[$current_question]['country'],
-            'total_questions' => $total_questions,
-            'current_question' => $current_question,
+            'totalQuestions' => $total_questions,
+            'currentQuestion' => $current_question,
             'answers' => $answers
         ]);
     }
