@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\View\View;
 
 class MainController extends Controller
@@ -23,15 +25,17 @@ class MainController extends Controller
     public function prepareGame(Request $request)
     {
         // validate request
-        $request->validate([
-            'total_questions' => 'required|integer|min:3|max:30'
-        ],
-        [
-            'total_questions.required' => 'O número de questões é obrigatório',
-            'total_questions.integer' => 'O número de questões tem que ser um valor inteiro',
-            'total_questions.min' => 'No mínimo :min questões',
-            'total_questions.max' => 'No máximo :max questões'
-        ]);
+        $request->validate(
+            [
+                'total_questions' => 'required|integer|min:3|max:30'
+            ],
+            [
+                'total_questions.required' => 'O número de questões é obrigatório',
+                'total_questions.integer' => 'O número de questões tem que ser um valor inteiro',
+                'total_questions.min' => 'No mínimo :min questões',
+                'total_questions.max' => 'No máximo :max questões'
+            ]
+        );
 
         // get total questions
         $total_questions = intval($request->input('total_questions'));
@@ -43,7 +47,7 @@ class MainController extends Controller
         session()->put([
             'quiz' => $quiz,
             'total_questions' => $total_questions,
-            'current_question' => 1,
+            'current_question' => 0,
             'correct_answers' => 0,
             'wrong_answers' => 0
         ]);
@@ -91,7 +95,7 @@ class MainController extends Controller
     {
         $quiz = session('quiz');
         $total_questions = session('total_questions');
-        $current_question = session('current_question') - 1;
+        $current_question = session('current_question');
 
         // prepare answers to show in view
         $answers = $quiz[$current_question]['wrong_answers'];
@@ -104,6 +108,72 @@ class MainController extends Controller
             'totalQuestions' => $total_questions,
             'currentQuestion' => $current_question,
             'answers' => $answers
+        ]);
+    }
+
+    public function answer($enc_answer)
+    {
+        try {
+            $answer = Crypt::decryptString($enc_answer);
+        } catch (DecryptException $e) {
+            return redirect()->route('game');
+        }
+
+        // game logic
+        $quiz = session('quiz');
+        $current_question = session('current_question') + 1;
+        $correct_answer = $quiz[$current_question]['correct_answer'];
+        $correct_answers = session('correct_answers');
+        $wrong_answers = session('wrong_answers');
+
+        if ($answer != $correct_answer) {
+            $wrong_answers++;
+            $quiz[$current_question]['correct'] = false;
+        }
+
+        $correct_answers++;
+        $quiz[$current_question]['correct'] = true;
+
+        session()->put([
+            'quiz' => $quiz,
+            'correct_answer' => $correct_answer,
+            'wrong_answers' => $wrong_answers
+        ]);
+
+        // prepare data to show the correct answer
+        $data = [
+            'country' => $quiz[$current_question]['country'],
+            'correct_answer' => $correct_answer,
+            'choice_answer' => $answer,
+            'currentQuestion' => $current_question,
+            'totalQuestions' => session('total_questions')
+        ];
+
+        return view('answer_result', $data);
+    }
+
+    public function nextQuestion()
+    {
+        $current_question = session('current_question') + 1;
+        $total_questions = session('total_questions');
+
+        // check if this game is over
+        if ($current_question > $total_questions) {
+            return redirect()->route('show_results');
+        }
+
+        $current_question++;
+        session()->put('current_question', $current_question);
+        return redirect()->route('game');
+    }
+
+    public function showResoults()
+    {
+        return view('final_results', [
+            'correct_answers' => session('correct_answers'),
+            'wrong_answers' => session('wrong_answers'),
+            'total_questions' => session('total_questions'),
+            'percentage' => round(session('total_questions') * session('correct_answers') / 100, 2)
         ]);
     }
 }

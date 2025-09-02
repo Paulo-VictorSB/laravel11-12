@@ -9,3 +9,8 @@ Route::post('/', [MainController::class, 'prepareGame'])->name('prepare_game');
 
 // In game
 Route::get('/game', [MainController::class, 'game'])->name('game');
+Route::get('/answer/{answer}', [MainController::class, 'answer'])->name('answer');
+Route::get('/next_question', [MainController::class, 'nextQuestion'])->name('nextQuestion');
+
+// Game over
+Route::get('/show_results', [MainController::class, 'showResults'])->name('showResults');
