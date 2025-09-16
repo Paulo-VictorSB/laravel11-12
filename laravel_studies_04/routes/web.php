@@ -3,15 +3,11 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function() {
+Route::get('/mysql_test', function() {
     try {
-
         DB::connection()->getPdo();
-        echo "Conexão realizada com sucesso com o banco: " . DB::connection()->getDatabaseName();
-
+        echo "OK!";
     } catch (\Throwable $th) {
-
-        die("Erro ao se conectar com o banco: " . $th);
-
+        die($th);
     }
 });
